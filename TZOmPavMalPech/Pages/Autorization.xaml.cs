@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TZOmPavMalPech.Entities;
 
 namespace TZOmPavMalPech.Pages
 {
@@ -23,6 +24,33 @@ namespace TZOmPavMalPech.Pages
         public Autorization()
         {
             InitializeComponent();
+        }
+
+        private void BtnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            var currentuser = App.Context.User
+             .FirstOrDefault(p => p.Login == TBoxLogin.Text && p.Password == PboxPassword.Password);
+
+            if (currentuser != null)
+            {
+                // Сохраняем текущего пользователя
+                App.CurrentUser = currentuser;
+
+                // НАПРАВЛЯЕМ НА ProductPage
+                NavigationService.Navigate(new Pages.Catalog());
+            }
+            else
+            {
+                // Если пользователь не найден, выводим ошибку
+                MessageBox.Show("Неверный логин или пароль.");
+            }
+        }
+
+        private void BtnGuest_Click(object sender, RoutedEventArgs e)
+        {
+            App.CurrentUser = new User() { FIO = "Гость" };
+            NavigationService.Navigate(new Pages.Catalog());
+            MessageBox.Show("Вы вошли как гость!");
         }
     }
 }
