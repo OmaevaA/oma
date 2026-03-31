@@ -1,12 +1,57 @@
-﻿<Window x:Class="TZOmPavMalPech.MainWindow"
+<Window x:Class="TZOmPavMalPech.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TZOmPavMalPech"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Icon="/res/book.png"
+        Title="Книжный каталог" Height="450" Width="800" WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
+        WindowState="Maximized"
+        MinWidth="600" 
+        MinHeight="350"
+        SizeToContent="Manual" ContentRendered="MainFrame_ContentRendered">
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition Height="69*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="#6F4E37"></Grid>
+        <Grid Grid.Row="1" Background="#FDFBF6"></Grid>
+        <Grid Grid.Row="2" Background="#6F4E37"></Grid>
+        <DockPanel LastChildFill="False">
+            <TextBlock x:Name="textBlockName"
+        Grid.Row="0"
+        TextWrapping="Wrap"
+        Text="{Binding ElementName=FrameMain,Path=Content.Title}"
+        DockPanel.Dock="Top"            
+        HorizontalAlignment="Center"
+        Margin="15"  
+        Width="270"/>
+        </DockPanel>
+        <!-- Добавление логотипа -->
+        <Image Source="/res/book.png" Width="100" 
+           HorizontalAlignment="Right"></Image>
+        <DockPanel LastChildFill="False">
+            <Button Name="BtnBack" 
+        Click="BtnBack_Click"
+        HorizontalAlignment="Left" 
+        DockPanel.Dock="Bottom"
+        Background="Transparent"
+        BorderThickness="0">
+                <TextBlock Text="⇦" 
+               FontSize="40" 
+               FontFamily="Segoe UI Symbol"
+               HorizontalAlignment="Left"
+               VerticalAlignment="Center"
+               Foreground="#FDFBF6">
+                </TextBlock>
+            </Button>
+        </DockPanel>
+        <Frame x:Name= "FrameMain" NavigationUIVisibility="Hidden"
+           Grid.Row="1" ></Frame>
     </Grid>
 </Window>
