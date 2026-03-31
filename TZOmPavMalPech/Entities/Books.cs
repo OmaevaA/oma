@@ -13,6 +13,7 @@ namespace TZOmPavMalPech.Entities
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
+    using System.Windows;
 
     public partial class Books
 
@@ -22,7 +23,7 @@ namespace TZOmPavMalPech.Entities
         {
             this.Readed = new HashSet<Readed>();
         }
-    
+
         public int Id_Books { get; set; }
         public string Name { get; set; }
         public string Avtor { get; set; }
@@ -31,45 +32,45 @@ namespace TZOmPavMalPech.Entities
         public Nullable<int> Publisher_Id { get; set; }
         public string Discription { get; set; }
         public string Image { get; set; }
-    
+
         public virtual Genre Genre { get; set; }
         public virtual Publisher Publisher { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Readed> Readed { get; set; }
+
+
+        public string  Control
+        {
+            get
+            {
+                // Только администратор видит кнопки редактирования и удаления
+                if (App.CurrentUser != null && App.CurrentUser.Role?.Name == "Администратор")
+                {
+                    return "Visible";
+                }
+                return "Collapsed";
+            }
+        }
         // Добавьте в класс Books (не в базу, просто для отображения)
-public bool IsReadByUser { get; set; }
+        public bool IsReadByUser { get; set; }
 
-// Добавьте свойство для цвета фона
-public string BackColor => IsReadByUser ? "#E2EDDE" : "#EAE3DB";
+        // Добавьте свойство для цвета фона
+        public string BackColor => IsReadByUser ? "#E2EDDE" : "#EAE3DB";
         // Добавьте в класс Books
-public string ReadCheckBoxVisibility
-{
-    get
-    {
-        // Администратор и авторизованный пользователь видят чекбокс
-        // Гость не видит
-        if (App.CurrentUser != null && 
-            (App.CurrentUser.Role?.Name == "Администратор" || 
-             App.CurrentUser.Role?.Name == "Авторизированный клиент"))
+        public string ReadCheckBoxVisibility
         {
-            return "Visible";
+            get
+            {
+                // Администратор и авторизованный пользователь видят чекбокс
+                // Гость не видит
+                if (App.CurrentUser != null &&
+                    (
+                     App.CurrentUser.Role?.Name == "Авторизированный клиент"))
+                {
+                    return "Visible";
+                }
+                return "Collapsed";
+            }
         }
-        return "Collapsed";
     }
 }
-        public string Control
-{
-    get
-    {
-        // Только администратор видит кнопки редактирования и удаления
-        if (App.CurrentUser != null && App.CurrentUser.Role?.Name == "Администратор")
-        {
-            return "Visible";
-        }
-        return "Collapsed";
-    }
-}
-       
-        }
-    }
-
