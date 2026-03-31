@@ -59,71 +59,84 @@ namespace TZOmPavMalPech.Pages
 
         //кнопка Сохранить
         private void BtnSave_Click(object sender, RoutedEventArgs e)
-        {
-            //Код вызывает метод проверки возможных ошибок ввода
-            var errorMessage = CheckErrors();
-            if (errorMessage.Length > 0)
-            {
-                MessageBox.Show(errorMessage, "Ошибка!",
-                MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            else
-            {
-                // Ищем или создаем издателя
-                var publisher = App.Context.Publisher
-                    .FirstOrDefault(p => p.Name == TextBoxPublisher.Text);
-                if (publisher == null)
-                {
-                    publisher = new Entities.Publisher { Name = TextBoxPublisher.Text };
-                }
+ {
+     var errorMessage = CheckErrors();
+     if (errorMessage.Length > 0)
+     {
+         MessageBox.Show(errorMessage, "Ошибка!",
+         MessageBoxButton.OK, MessageBoxImage.Error);
+     }
+     else
+     {
+         // Ищем или создаем издателя
+         var publisher = App.Context.Publisher
+             .FirstOrDefault(p => p.Name == TextBoxPublisher.Text);
+         if (publisher == null)
+         {
+             publisher = new Entities.Publisher { Name = TextBoxPublisher.Text };
+         }
 
-                // Ищем или создаем жанр
-                var genre = App.Context.Genre
-                    .FirstOrDefault(g => g.Name == ComboGenre.Text);
-                if (genre == null)
-                {
-                    genre = new Entities.Genre { Name = ComboGenre.Text };
-                }
+         // Ищем или создаем жанр
+         var genre = App.Context.Genre
+             .FirstOrDefault(g => g.Name == ComboGenre.Text);
+         if (genre == null)
+         {
+             genre = new Entities.Genre { Name = ComboGenre.Text };
+         }
 
-                if (_currentProduct == null)
-                {
-                    var book = new Entities.Books
-                    {
-                        Name = TextBoxName.Text,
-                        Discription = TextBoxDisc.Text,
-                        Avtor = TextBoxAvtor.Text,
-                        Publisher = publisher,
-                        Genre = genre,
-                        DateBook = TextBoxDate.SelectedDate.Value,
-                        Image = _selectedImagePath
-                    };
-                    App.Context.Books.Add(book);
-                    App.Context.SaveChanges();
-                    MessageBox.Show("Информация добавлена.", "Успех",
-                                    MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                else
-                {
-                    _currentProduct.Genre = genre;
-                    _currentProduct.Name = TextBoxName.Text;
-                    _currentProduct.Discription = TextBoxDisc.Text;
-                    _currentProduct.Publisher = publisher;
-                    _currentProduct.Avtor = TextBoxAvtor.Text;
-                    _currentProduct.DateBook = TextBoxDate.SelectedDate.Value;
+         // ⭐ ПРОВЕРКА НА ПУСТУЮ КАРТИНКУ ⭐
+         string imagePath = _selectedImagePath;
+         if (string.IsNullOrWhiteSpace(imagePath))
+         {
+             // Если картинка не выбрана — ставим заглушку
+             imagePath = "/res/picture.jpg";
+         }
 
-                    // Обновляем изображение только если выбрано новое
-                    if (!string.IsNullOrEmpty(_selectedImagePath))
-                    {
-                        _currentProduct.Image = _selectedImagePath;
-                    }
+         if (_currentProduct == null)
+         {
+             var book = new Entities.Books
+             {
+                 Name = TextBoxName.Text,
+                 Discription = TextBoxDisc.Text,
+                 Avtor = TextBoxAvtor.Text,
+                 Publisher = publisher,
+                 Genre = genre,
+                 DateBook = TextBoxDate.SelectedDate.Value,
+                 Image = imagePath  // Используем проверенный путь
+             };
+             App.Context.Books.Add(book);
+             App.Context.SaveChanges();
+             MessageBox.Show("Информация добавлена.", "Успех",
+                             MessageBoxButton.OK, MessageBoxImage.Information);
+         }
+         else
+         {
+             _currentProduct.Genre = genre;
+             _currentProduct.Name = TextBoxName.Text;
+             _currentProduct.Discription = TextBoxDisc.Text;
+             _currentProduct.Publisher = publisher;
+             _currentProduct.Avtor = TextBoxAvtor.Text;
+             _currentProduct.DateBook = TextBoxDate.SelectedDate.Value;
 
-                    App.Context.SaveChanges();
-                    MessageBox.Show("Информация редактирована.", "Успех",
-                                    MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                NavigationService.Navigate(new Pages.Catalog());
-            }
-        }
+             // Обновляем изображение только если выбрано новое
+             if (!string.IsNullOrEmpty(_selectedImagePath))
+             {
+                 _currentProduct.Image = _selectedImagePath;
+             }
+             // Если изображение не выбрано, но в базе уже было пустое — оставляем пустым
+             // или тоже ставим заглушку
+             if (string.IsNullOrEmpty(_currentProduct.Image))
+             {
+                 _currentProduct.Image = "/res/no-image.png";
+             }
+
+             App.Context.SaveChanges();
+             MessageBox.Show("Информация редактирована.", "Успех",
+                             MessageBoxButton.OK, MessageBoxImage.Information);
+         }
+         NavigationService.Navigate(new Pages.Catalog());
+     }
+ }
 
         //кнопка выбора фото
         private void BtnFoto_Click(object sender, RoutedEventArgs e)
