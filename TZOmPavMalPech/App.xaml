@@ -1,9 +1,58 @@
-﻿<Application x:Class="TZOmPavMalPech.App"
+<Application x:Class="TZOmPavMalPech.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:TZOmPavMalPech"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="FontFamily" Value="Gabriola"/>
+            <!-- Шрифт -->
+            <Setter Property="FontSize" Value="22"/>
+            <!-- Размер шрифта -->
+            <Setter Property="Background" Value="#D2B48C"/>
+            <!-- Фон кнопки -->
+            <Setter Property="Margin" Value="5"/>
+            <!-- Oтступы -->
+            <Setter Property="MinWidth" Value="100"/>
+            <!-- Минимальная ширина -->
+        </Style>
+        <!-- Чтобы применить стиль ко всему тексту в ИС -->
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="FontFamily" Value="Gabriola"/>
+            <Setter Property="FontSize" Value="22"/>
+            <!-- Размер шрифта -->
+            <Setter Property="Margin" Value="5"/>
+            <!-- Oтступы -->
+        </Style>
+        <!-- Чтобы применить стиль к текстовым полям ИС -->
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="FontFamily" Value="Gabriola"/>
+            <Setter Property="FontSize" Value="22"/>
+            <!-- Размер шрифта -->
+            <Setter Property="Margin" Value="5"/>
+            <!-- Oтступы -->
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="180"/>
+        </Style>
+        <!-- Чтобы применить стиль к выпадающим спискам ИС -->
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="FontFamily" Value="Gabriola"/>
+            <Setter Property="FontSize" Value="22"/>
+            <!-- Размер шрифта -->
+            <Setter Property="Margin" Value="5"/>
+            <!-- Oтступы -->
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="180"/>
+            
+        </Style>
+        <Style TargetType="{x:Type DatePicker}">
+            <Setter Property="FontFamily" Value="Gabriola"/>
+            <Setter Property="FontSize" Value="22"/>
+            <!-- Размер шрифта -->
+            <Setter Property="Margin" Value="5"/>
+            <!-- Oтступы -->
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="180"/>
+        </Style>
     </Application.Resources>
 </Application>
