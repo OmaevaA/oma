@@ -178,60 +178,38 @@ namespace TZOmPavMalPech.Pages
 
 
         private void Page_Loaded_2(object sender, RoutedEventArgs e)
-        {
-            UpdateProduct();
-            // Видимость кнопок для Авторизированный клиент
-            // Проверка на null для App.CurrentUser и App.CurrentUser.Role
-            if (App.CurrentUser != null && App.CurrentUser.Role != null)
-    {
-        if (App.CurrentUser.Role.Name == "Администратор")
-        {
-            // Админ видит всё
-            ComboSortBy.Visibility = Visibility.Visible;
-            ComboSortSuplier.Visibility = Visibility.Visible;
-            TBoxSearch.Visibility = Visibility.Visible;
-            BtnAdd.Visibility = Visibility.Visible;
-        }
-        else if (App.CurrentUser.Role.Name == "Авторизированный клиент")
-        {
-            // Пользователь видит поиск и фильтры, но НЕ видит кнопки добавить/удалить/редактировать
-            ComboSortBy.Visibility = Visibility.Visible;
-            ComboSortSuplier.Visibility = Visibility.Visible;
-            TBoxSearch.Visibility = Visibility.Visible;
-            BtnAdd.Visibility = Visibility.Collapsed;
-            
-            // Чекбокс "Прочитано" будет виден через свойство ReadCheckBoxVisibility
-        }
-        else // Гость
-        {
-            // Гость видит только поиск и фильтры
-            ComboSortBy.Visibility = Visibility.Visible;
-            ComboSortSuplier.Visibility = Visibility.Visible;
-            TBoxSearch.Visibility = Visibility.Visible;
-            BtnAdd.Visibility = Visibility.Collapsed;
-        }
-    }
-}
-            // В начале класса Catalog
-private Dictionary<int, bool> _readedCache = new Dictionary<int, bool>();
+ {
+     // Проверяем, есть ли пользователь и роль
+     if (App.CurrentUser != null && App.CurrentUser.Role != null)
+     {
+         string roleName = App.CurrentUser.Role.Name;
 
-// Метод загрузки кэша
-private void LoadReadedCache()
-{
-    _readedCache.Clear();
-    
-    if (App.CurrentUser?.ID_User != null)
-    {
-        var readedItems = App.Context.Readed
-            .Where(r => r.User_Id == App.CurrentUser.ID_User)
-            .ToList();
-        
-        foreach (var item in readedItems)
-        {
-            _readedCache[item.Id_Readed] = item.is_read == 1;
-        }
-    }
-}
+         if (roleName == "Администратор")
+         {
+             // Админ видит всё
+             ComboSortBy.Visibility = Visibility.Visible;
+             ComboSortSuplier.Visibility = Visibility.Visible;
+             TBoxSearch.Visibility = Visibility.Visible;
+             BtnAdd.Visibility = Visibility.Visible;
+         }
+         else if (roleName == "Авторизированный клиент")
+         {
+             // Пользователь видит поиск и фильтры, но НЕ видит кнопку добавить
+             ComboSortBy.Visibility = Visibility.Visible;
+             ComboSortSuplier.Visibility = Visibility.Visible;
+             TBoxSearch.Visibility = Visibility.Visible;
+             BtnAdd.Visibility = Visibility.Collapsed; // Скрываем кнопку Добавить
+         }
+     }
+     else
+     {
+         // Если пользователь не авторизован — скрываем всё
+         ComboSortBy.Visibility = Visibility.Visible;
+         ComboSortSuplier.Visibility = Visibility.Visible;
+         TBoxSearch.Visibility = Visibility.Visible;
+         BtnAdd.Visibility = Visibility.Collapsed;
+     }
+ }
 
         private void ChkRead_Click(object sender, RoutedEventArgs e)
         {
