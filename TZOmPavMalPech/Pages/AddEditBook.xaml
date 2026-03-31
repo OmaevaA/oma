@@ -1,4 +1,4 @@
-﻿<Page x:Class="TZOmPavMalPech.Pages.AddEditBook"
+<Page x:Class="TZOmPavMalPech.Pages.AddEditBook"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,9 +6,63 @@
       xmlns:local="clr-namespace:TZOmPavMalPech.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AddEditBook">
+         Title="Добавление/Редактирование товара">
 
     <Grid>
-        
+
+        <StackPanel  Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"> 
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <!-- Название продукции -->
+                    <TextBlock  Text="Название книги:"/>
+                    <TextBox Name="TextBoxName"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <!-- автор -->
+                    <TextBlock Text="Автор:"/>
+                    <TextBox Name="TextBoxAvtor"/>
+                </StackPanel>
+                <!-- Категория продукции -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Text="Жанр:"></TextBlock>
+                    <ComboBox Name="ComboGenre">
+                        <ComboBoxItem Content="Роман-эпопея"></ComboBoxItem>
+                        <ComboBoxItem Content="Роман"></ComboBoxItem>
+                        <ComboBoxItem Content="Сатира"></ComboBoxItem>
+                        <ComboBoxItem Content="Проза / Притча"></ComboBoxItem>
+                        <ComboBoxItem Content="Трагедия"></ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <!-- Издатель -->
+                    <TextBlock Text="Издатель:"/>
+                    <TextBox Name="TextBoxPublisher"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <!-- Описание продукции -->
+                    <TextBlock Text="Описание:" TextWrapping="Wrap"/>
+                    <TextBox Name="TextBoxDisc"/>
+                </StackPanel>
+
+
+                
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <!-- Скидка -->
+                    <TextBlock Text="Дата издания:"/>
+                    <DatePicker Name="TextBoxDate" Margin="5"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" VerticalAlignment="Top">
+
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="10,10,10,0">
+                        <!-- Разметка для  кнопок -->
+                        <Button x:Name="BtnFoto" Content="Выбрать фото" Click="BtnFoto_Click"/>
+                        <Button x:Name="BtnSave" Content="Сохранить"  Click="BtnSave_Click"  />
+                    </StackPanel>
+                </StackPanel>
+
+            </StackPanel>
+        </StackPanel>
+
     </Grid>
 </Page>
