@@ -45,8 +45,8 @@
             </ComboBox>
 
             <!-- поиск-->
-            <TextBox Name="TBoxSearch" Visibility="{Binding Control}" Margin="5" Width="220" 
-             SelectionChanged="TBoxSearch_SelectionChanged" Background="#F5E6D3"></TextBox>
+            <TextBox Name="TBoxSearch"  Visibility="{Binding Control}" Margin="5" Width="220" 
+             SelectionChanged="TBoxSearch_SelectionChanged"></TextBox>
         </StackPanel>
 
         <!-- Добавление списка -->
@@ -74,7 +74,7 @@
                                        DockPanel.Dock="Left" Width="230"
                                         FontSize="18"  Text="{Binding Name}"></TextBlock>
                                     <!-- Добавление изображения-->
-                                        <Image Stretch="Uniform" HorizontalAlignment="Left"  Width="200" Height="200" Source="{Binding Image}"></Image>
+                                        <Image Source="{Binding Image, FallbackValue=/res/picture.jpg}" Stretch="Uniform" HorizontalAlignment="Left"  Width="200" Height="200"></Image>
                                         </StackPanel>
                                     <!-- Добавьте в StackPanel с кнопками или рядом с названием -->
                                     
@@ -101,16 +101,15 @@
                                         <TextBlock  DockPanel.Dock="Left" HorizontalAlignment="Left"  > 
                              <Run Text="Год издания: "/>       <Run    Text="{Binding DateBook,StringFormat={}{0:dd.MM.yyyy}}"/>
                                         </TextBlock>
-                                        
+
                                         <StackPanel Orientation="Horizontal">
-                                          
-                                                <!-- Чекбокс для отметки прочитанного -->
+                                            <!-- Чекбокс для отметки прочитанного -->
                                                 <CheckBox Name="ChkRead" 
               Content="Прочитано"
               IsChecked="{Binding IsReadByUser, Mode=TwoWay}"
               Visibility="{Binding ReadCheckBoxVisibility}"
               Click="ChkRead_Click"
-              Margin="0,0,20,0"/>
+              />
                                                 <Button Content="Редактировать"  Name="Edid" Visibility="{Binding Control}"
                                         Click="Edid_Click"  ></Button>
                                             <Button Content="Удалить" Name="Del" Visibility="{Binding Control}" Click="Del_Click"></Button>
